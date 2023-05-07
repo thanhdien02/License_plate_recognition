@@ -47,15 +47,16 @@ frame_buttons.grid(row=0, column=1, sticky="n")
 
 
 def load_results():
-    images = []
+    images.clear()
     for i in range(4):
-        filename = f"./anh/{i+1}.png"
+        filename = f"./outputs/{i+1}.png"
         image = Image.open(filename)
-        image = image.resize((200, 200), Image.ANTIALIAS)
+        image = image.resize((200, 200), Image.Resampling.LANCZOS)
         photo = ImageTk.PhotoImage(image)
         images.append(photo)
         label = ttk.Label(frame_grid, image=photo)
         label.grid(row=i//2, column=i%2, padx=10, pady=10)
+    frame_grid.update()
 
 
 def run():
@@ -63,6 +64,7 @@ def run():
     if file_path:
         #xu ly anh ngay day
         detect.detect(file_path)
+        load_results()  
         
     
 # Tạo các button và thêm vào frames

@@ -23,6 +23,7 @@ def detect(input_file_path):
     RESIZED_IMAGE_WIDTH = 20
     RESIZED_IMAGE_HEIGHT = 30
     img = cv2.imread(input_file_path)
+    cv2.imwrite(f"./outputs/1.png", img)
     img = cv2.resize(img, dsize=(1920, 1080))
 
     ###################### If you want to try increasing the contrast #############
@@ -122,6 +123,9 @@ def detect(input_file_path):
             cont, hier = cv2.findContours(thre_mor, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
             cv2.imshow(str(n + 20), thre_mor)
+            finalIndex = n+3;
+            if(finalIndex == 4):
+                cv2.imwrite(f"./outputs/{finalIndex}.png", thre_mor)
             cv2.drawContours(roi, cont, -1, (100, 255, 255), 2)  # Vẽ contour các kí tự trong biển số
 
             ##################### Filter out characters #################
@@ -174,9 +178,12 @@ def detect(input_file_path):
 
             print("\n License Plate " + str(n) + " is: " + first_line + " - " + second_line + "\n")
             roi = cv2.resize(roi, None, fx=0.75, fy=0.75)
+            if (n==1):
+                cv2.imwrite("./outputs/3.png", roi)
             cv2.imshow(str(n), cv2.cvtColor(roi, cv2.COLOR_BGR2RGB))
 
             # cv2.putText(img, first_line + "-" + second_line ,(topy ,topx),cv2.FONT_HERSHEY_DUPLEX, 2, (0, 255, 255), 2)
             n = n + 1
     img = cv2.resize(img, None, fx=0.5, fy=0.5)
+    cv2.imwrite("./outputs/2.png", img)
     cv2.imshow('License plate', img)
